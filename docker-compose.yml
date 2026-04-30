@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: integriguard
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  vector-db:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_storage:/qdrant/storage
+
+  cache:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  ml-service:
+    build: ./integriguard-ml
+    ports:
+      - "8001:8001"
+    environment:
+      - QDRANT_HOST=vector-db
+    depends_on:
+      - vector-db
+
+  backend:
+    build: ./integriguard-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://user:password@db:5432/integriguard
+      - REDIS_URL=redis://cache:6379
+      - ML_SERVICE_URL=http://ml-service:8001
+    depends_on:
+      - db
+      - cache
+      - ml-service
+
+  frontend:
+    build: .
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
+  qdrant_storage:

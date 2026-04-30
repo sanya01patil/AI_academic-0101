@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --surface: 0 0% 100%;
+    --surface-light: 210 20% 96%;
+    
+    --brand: 245 45% 37%;
+    --brand-light: 245 80% 97%;
+    
+    --risk-high: 0 57% 41%;
+    --risk-high-bg: 0 71% 95%;
+    
+    --risk-medium: 35 85% 28%;
+    --risk-medium-bg: 35 74% 92%;
+    
+    --risk-low: 93 73% 25%;
+    --risk-low-bg: 93 45% 91%;
+    
+    --text-primary: 210 20% 10%;
+    --text-secondary: 210 10% 40%;
+    --text-muted: 210 10% 60%;
+    
+    --border: 210 10% 90%;
+  }
+
+  .dark {
+    --background: 222 47% 4%;
+    --surface: 222 47% 8%;
+    --surface-light: 222 47% 12%;
+    
+    --brand: 245 75% 65%;
+    --brand-light: 245 50% 15%;
+    
+    --risk-high: 0 80% 65%;
+    --risk-high-bg: 0 60% 15%;
+    
+    --risk-medium: 35 95% 60%;
+    --risk-medium-bg: 35 60% 15%;
+    
+    --risk-low: 142 65% 50%;
+    --risk-low-bg: 142 50% 12%;
+    
+    --text-primary: 213 27% 91%;
+    --text-secondary: 215 16% 65%;
+    --text-muted: 215 13% 47%;
+    
+    --border: 217 33% 15%;
+  }
+
+  * {
+    @apply border-border border-0 transition-colors duration-300;
+  }
+
+  body {
+    @apply bg-background text-text-primary antialiased transition-colors duration-300;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight text-text-primary;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full hover:bg-text-muted transition-colors;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-surface border-0.5 border-border rounded-panel;
+  }
+
+  .stat-card {
+    @apply bg-surface p-6 rounded-card border-0.5 border-border hover:bg-surface-light transition-all duration-300;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-md font-bold transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .btn-primary {
+    @apply btn bg-brand text-white hover:opacity-90;
+  }
+  .btn-outline {
+    @apply btn border-0.5 border-border bg-surface hover:bg-surface-light text-text-primary;
+  }
+  .btn-ghost {
+    @apply btn bg-transparent hover:bg-surface-light text-text-secondary hover:text-text-primary;
+  }
+
+  .input {
+    @apply w-full bg-surface-light border-0.5 border-border rounded-md px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-1 focus:ring-brand/20 focus:border-brand transition-all;
+  }
+}
